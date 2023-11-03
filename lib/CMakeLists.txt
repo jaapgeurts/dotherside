@@ -2,11 +2,11 @@ include(GNUInstallDirs)
 
 set(QTPREFIX "Qt")
 
-find_package(Qt6 COMPONENTS Core Qml Gui Quick QuickControls2 Widgets)
-if (NOT Qt6_FOUND)
+#find_package(Qt6 COMPONENTS Core Qml Gui Quick QuickControls2 Widgets)
+#if (NOT Qt6_FOUND)
     set(QTPREFIX "Qt5")
     find_package(Qt5 COMPONENTS Core Qml Gui Quick QuickControls2 Widgets)
-endif()
+#endif()
 
 # Macro for merging common code between static and shared
 macro(add_target name type)
@@ -26,6 +26,7 @@ macro(add_target name type)
         include/DOtherSide/Utils.h
         include/DOtherSide/DosQtCompatUtils.h
         include/DOtherSide/DosLambdaInvoker.h
+        include/DOtherSide/DosQQmlExtensionPlugin.h
         src/DOtherSide.cpp
         src/DosQMetaObject.cpp
         src/DosQDeclarative.cpp
@@ -35,6 +36,7 @@ macro(add_target name type)
         src/DosQAbstractItemModel.cpp
         src/DosQQuickImageProvider.cpp
         src/DosLambdaInvoker.cpp
+        src/DosQQmlExtensionPlugin.cpp
     )
 
     if (WIN32)

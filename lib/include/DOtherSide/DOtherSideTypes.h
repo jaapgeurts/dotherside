@@ -28,7 +28,6 @@
 #ifndef DOTHERSIDETYPES_H
 #define DOTHERSIDETYPES_H
 
-
 #ifdef WIN32
 #define DOS_CALL __cdecl
 #else
@@ -40,8 +39,7 @@
 #endif
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /// A pointer to a QVariant
@@ -64,6 +62,9 @@ typedef void DosQQmlApplicationEngine;
 
 /// A pointer to a QQuickView
 typedef void DosQQuickView;
+
+/// A point to a QQmlExtensionPlugin
+typedef void DosQQmlExtensionPlugin;
 
 /// A pointer to a QQmlContext
 typedef void DosQQmlContext;
@@ -92,6 +93,11 @@ typedef void DosQPointer;
 /// A pointer to a Lambda invoker
 typedef void DosQMetaObjectConnection;
 
+/// Called during loading of a QT plugin
+/// \param pluginPtr the pointer to the D plugin object
+/// \param uri a pointer to a null terminated uri string
+typedef void(DOS_CALL* RegisterTypeCallback)(const void* pluginPtr, const char* uri);
+
 /// A pixmap callback to be supplied to an image provider
 /// \param id Image source id
 /// \param width pointer to the width of the image
@@ -101,7 +107,7 @@ typedef void DosQMetaObjectConnection;
 /// \param[out] result The result QPixmap. This should be assigned from the binded language
 /// \note \p id is the trailing part of an image source url for example "image://<provider_id>/<id>
 /// \note The \p result arg is an out parameter so it \b shouldn't be deleted. See the dos_qpixmap_assign
-typedef void (DOS_CALL *RequestPixmapCallback)(const char *id, int *width, int *height, int requestedWidth, int requestedHeight, DosPixmap* result);
+typedef void(DOS_CALL* RequestPixmapCallback)(const char* id, int* width, int* height, int requestedWidth, int requestedHeight, DosPixmap* result);
 
 /// Called when a property is readed/written or a slot should be executed
 /// \param self The pointer of QObject in the binded language
@@ -114,7 +120,7 @@ typedef void (DOS_CALL *RequestPixmapCallback)(const char *id, int *width, int *
 /// or other dos_qvariant_set... setters.
 /// \note The \p slotName is owned by the library thus it \b shouldn't be deleted
 /// \note The \p argv array is owned by the library thus it \b shouldn't be deleted
-typedef void (DOS_CALL *DObjectCallback)(void *self, DosQVariant *slotName, int argc, DosQVariant **argv);
+typedef void(DOS_CALL* DObjectCallback)(void* self, DosQVariant* slotName, int argc, DosQVariant** argv);
 
 /// Called when the QAbstractItemModel::rowCount method must be executed
 /// \param self The pointer of the QAbstractItemModel in the binded language
@@ -122,7 +128,7 @@ typedef void (DOS_CALL *DObjectCallback)(void *self, DosQVariant *slotName, int 
 /// \param[out] result The rowCount result. This must be deferenced and filled from the binded language
 /// \note The \p parent QModelIndex is owned by the DOtherSide library thus it \b shouldn't be deleted
 /// \note The \p result arg is an out parameter so it \b shouldn't be deleted
-typedef void (DOS_CALL *RowCountCallback)(void *self, const DosQModelIndex *parent, int *result);
+typedef void(DOS_CALL* RowCountCallback)(void* self, const DosQModelIndex* parent, int* result);
 
 /// Called when the QAbstractItemModel::columnCount method must be executed
 /// \param self The pointer to the QAbstractItemModel in the binded language
@@ -130,7 +136,7 @@ typedef void (DOS_CALL *RowCountCallback)(void *self, const DosQModelIndex *pare
 /// \param[out] result The rowCount result. This must be deferenced and filled from the binded language
 /// \note The \p parent QModelIndex is owned by the DOtherSide library thus it \b shouldn't be deleted
 /// \note The \p result arg is an out parameter so it \b shouldn't be deleted
-typedef void (DOS_CALL *ColumnCountCallback)(void *self, const DosQModelIndex *parent, int *result);
+typedef void(DOS_CALL* ColumnCountCallback)(void* self, const DosQModelIndex* parent, int* result);
 
 /// Called when the QAbstractItemModel::data method must be executed
 /// \param self The pointer to the QAbstractItemModel in the binded language
@@ -138,34 +144,34 @@ typedef void (DOS_CALL *ColumnCountCallback)(void *self, const DosQModelIndex *p
 /// \param[out] result The DosQVariant result. This must be deferenced and filled from the binded language.
 /// \note The \p index QModelIndex is owned by the DOtherSide library thus it \b shouldn't be deleted
 /// \note The \p result arg is an out parameter so it \b shouldn't be deleted
-typedef void (DOS_CALL *DataCallback)(void *self, const DosQModelIndex *index, int role, DosQVariant *result);
+typedef void(DOS_CALL* DataCallback)(void* self, const DosQModelIndex* index, int role, DosQVariant* result);
 
 /// Called when the QAbstractItemModel::setData method must be executed
-typedef void (DOS_CALL *SetDataCallback)(void *self, const DosQModelIndex *index, const DosQVariant *value, int role, bool *result);
+typedef void(DOS_CALL* SetDataCallback)(void* self, const DosQModelIndex* index, const DosQVariant* value, int role, bool* result);
 
 /// Called when the QAbstractItemModel::roleNames method must be executed
-typedef void (DOS_CALL *RoleNamesCallback)(void *self, DosQHashIntQByteArray *result);
+typedef void(DOS_CALL* RoleNamesCallback)(void* self, DosQHashIntQByteArray* result);
 
 /// Called when the QAbstractItemModel::flags method must be called
-typedef void (DOS_CALL *FlagsCallback)(void *self, const DosQModelIndex *index, int *result);
+typedef void(DOS_CALL* FlagsCallback)(void* self, const DosQModelIndex* index, int* result);
 
 /// Called when the QAbstractItemModel::headerData method must be called
-typedef void (DOS_CALL *HeaderDataCallback)(void *self, int section, int orientation, int role, DosQVariant *result);
+typedef void(DOS_CALL* HeaderDataCallback)(void* self, int section, int orientation, int role, DosQVariant* result);
 
 /// Called when the QAbstractItemModel::index method must be called
-typedef void (DOS_CALL *IndexCallback)(void *self, int row, int column, const DosQModelIndex *parent, DosQModelIndex *result);
+typedef void(DOS_CALL* IndexCallback)(void* self, int row, int column, const DosQModelIndex* parent, DosQModelIndex* result);
 
 /// Called when the QAbstractItemModel::parent method must be called
-typedef void (DOS_CALL *ParentCallback)(void *self, const DosQModelIndex *child, DosQModelIndex *result);
+typedef void(DOS_CALL* ParentCallback)(void* self, const DosQModelIndex* child, DosQModelIndex* result);
 
 /// Called when the QAbstractItemModel::hasChildren method must be called
-typedef void (DOS_CALL *HasChildrenCallback)(void *self, const DosQModelIndex *parent, bool *result);
+typedef void(DOS_CALL* HasChildrenCallback)(void* self, const DosQModelIndex* parent, bool* result);
 
 /// Called when the QAbstractItemModel::canFetchMore method must be called
-typedef void (DOS_CALL *CanFetchMoreCallback)(void *self, const DosQModelIndex *parent, bool *result);
+typedef void(DOS_CALL* CanFetchMoreCallback)(void* self, const DosQModelIndex* parent, bool* result);
 
 /// Called when the QAbstractItemModel::fetchMore method must be called
-typedef void (DOS_CALL *FetchMoreCallback)(void *self, const DosQModelIndex *parent);
+typedef void(DOS_CALL* FetchMoreCallback)(void* self, const DosQModelIndex* parent);
 
 /// Callback called from QML for creating a registered type
 /**
@@ -207,7 +213,7 @@ proc createCallback(.....) =
  * \param bindedQObject This should be deferenced and assigned with the pointer of the QObject modeled in the binded language
  * \param dosQObject This should be deferenced and assigned with the DosQObject pointer you gained from calling the dos_qobject_create() function
  */
-typedef void (DOS_CALL *CreateDObject)(int id, void *wrapper, void **bindedQObject, void **dosQObject);
+typedef void(DOS_CALL* CreateDObject)(int id, void* wrapper, void** bindedQObject, void** dosQObject);
 
 /// Callback invoked from QML for deleting a registered type
 /**
@@ -217,13 +223,13 @@ typedef void (DOS_CALL *CreateDObject)(int id, void *wrapper, void **bindedQObje
  * \param bindedQObject This is the pointer you given in the CreateDObject callback and you can use it
  * for obtaining the QObject in your binded language. This allows you to unpin/unref it or delete it.
  */
-typedef void (DOS_CALL *DeleteDObject)(int id, void *bindedQObject);
+typedef void(DOS_CALL* DeleteDObject)(int id, void* bindedQObject);
 
 /// Callback invoked after an emit of a signal
-typedef void (DOS_CALL *DosQObjectConnectLambdaCallback)(void* callbackData, int argc, DosQVariant **argv);
+typedef void(DOS_CALL* DosQObjectConnectLambdaCallback)(void* callbackData, int argc, DosQVariant** argv);
 
 /// Callback invoked after a QMetaObject invoke method
-typedef void (DOS_CALL *DosQMetaObjectInvokeMethodCallback)(void* callbackData);
+typedef void(DOS_CALL* DosQMetaObjectInvokeMethodCallback)(void* callbackData);
 
 /// \brief Store an array of QVariant
 /// \note This struct should be freed by calling dos_qvariantarray_delete(DosQVariantArray *ptr). This in turn
@@ -232,7 +238,7 @@ struct DosQVariantArray {
     /// The number of elements
     int size;
     /// The array
-    DosQVariant **data;
+    DosQVariant** data;
 };
 
 #ifndef __cplusplus
@@ -246,18 +252,18 @@ typedef struct DosQVariantArray DosQVariantArray;
  * \see dos_qdeclarative_qmlregistersingletontype()
  * \note All string and objects are considered to be owned by the caller thus they'll
  * not be freed
-*/
+ */
 struct QmlRegisterType {
     /// The Module major version
     int major;
     /// The Module minor version
     int minor;
     /// The Module uri
-    const char *uri;
+    const char* uri;
     /// The type name to be used in QML files
-    const char *qml;
+    const char* qml;
     /// The type QMetaObject
-    DosQMetaObject *staticMetaObject;
+    DosQMetaObject* staticMetaObject;
     /// The callback invoked from QML when this type should be created
     CreateDObject createDObject;
     /// The callback invoked from QML when this type should be deleted
@@ -271,7 +277,7 @@ typedef struct QmlRegisterType QmlRegisterType;
 /// Represents a parameter definition
 struct ParameterDefinition {
     /// The parameter name
-    const char *name;
+    const char* name;
     /// The parameter metatype
     int metaType;
 };
@@ -283,11 +289,11 @@ typedef struct ParameterDefinition ParameterDefinition;
 /// Represents a single signal definition
 struct SignalDefinition {
     /// The signal name
-    const char *name;
+    const char* name;
     /// The parameters count
     int parametersCount;
     /// The parameters
-    ParameterDefinition *parameters;
+    ParameterDefinition* parameters;
 };
 
 #ifndef __cplusplus
@@ -299,7 +305,7 @@ struct SignalDefinitions {
     /// The total number of signals
     int count;
     /// The signals
-    SignalDefinition *definitions;
+    SignalDefinition* definitions;
 };
 
 #ifndef __cplusplus
@@ -309,13 +315,13 @@ typedef struct SignalDefinitions SignalDefinitions;
 /// Represents a single slot definition
 struct SlotDefinition {
     /// The slot name
-    const char *name;
+    const char* name;
     /// The slot return type
     int returnMetaType;
     /// The parameters count
     int parametersCount;
     /// The parameters
-    ParameterDefinition *parameters;
+    ParameterDefinition* parameters;
 };
 
 #ifndef __cplusplus
@@ -327,7 +333,7 @@ struct SlotDefinitions {
     /// The total number of slots
     int count;
     /// The slot definitions array
-    SlotDefinition *definitions;
+    SlotDefinition* definitions;
 };
 
 #ifndef __cplusplus
@@ -337,17 +343,17 @@ typedef struct SlotDefinitions SlotDefinitions;
 /// Represents a single property definition
 struct PropertyDefinition {
     /// The property name
-    const char *name;
+    const char* name;
     /// The property metatype
     int propertyMetaType;
     /// The name of the property read slot
-    const char *readSlot;
+    const char* readSlot;
     /// \brief The name of the property write slot
     /// \note Setting this to null means a readonly proeperty
-    const char *writeSlot;
+    const char* writeSlot;
     /// \brief The name of the property notify signals
     /// \note Setting this to null means a constant property
-    const char *notifySignal;
+    const char* notifySignal;
 };
 
 #ifndef __cplusplus
@@ -359,7 +365,7 @@ struct PropertyDefinitions {
     /// The total number of properties
     int count;
     /// The property definitions array
-    PropertyDefinition *definitions;
+    PropertyDefinition* definitions;
 };
 
 #ifndef __cplusplus
@@ -384,6 +390,14 @@ struct DosQAbstractItemModelCallbacks {
 
 #ifndef __cplusplus
 typedef struct DosQAbstractItemModelCallbacks DosQAbstractItemModelCallbacks;
+#endif
+
+struct DosQQmlExtensionPluginCallbacks {
+    RegisterTypeCallback registerType;
+};
+
+#ifndef __cplusplus
+typedef struct DosQQmlExtensionPluginCallbacks DosQQmlExtensionPluginCallbacks;
 #endif
 
 enum DosQEventLoopProcessEventFlag {
