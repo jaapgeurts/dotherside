@@ -94,9 +94,14 @@ typedef void DosQPointer;
 typedef void DosQMetaObjectConnection;
 
 /// Called during loading of a QT plugin
-/// \param pluginPtr the pointer to the D plugin object
+/// \param pluginPtr the pointer to the plugin object
 /// \param uri a pointer to a null terminated uri string
-typedef void(DOS_CALL* RegisterTypeCallback)(const void* pluginPtr, const char* uri);
+typedef void(DOS_CALL* RegisterTypesCallback)(const void* pluginPtr, const char* uri);
+
+/// Called when the QMLengine is initialized
+/// \param enginePtr point to the engine
+/// \param uri a pointer to a null terminated uri string
+typedef void(DOS_CALL* InitializeEngineCallback)(const void* pluginPtr, const void* enginePtr, const char* uri);
 
 /// A pixmap callback to be supplied to an image provider
 /// \param id Image source id
@@ -393,7 +398,8 @@ typedef struct DosQAbstractItemModelCallbacks DosQAbstractItemModelCallbacks;
 #endif
 
 struct DosQQmlExtensionPluginCallbacks {
-    RegisterTypeCallback registerType;
+    RegisterTypesCallback registerTypes;
+    InitializeEngineCallback initializeEngine;
 };
 
 #ifndef __cplusplus

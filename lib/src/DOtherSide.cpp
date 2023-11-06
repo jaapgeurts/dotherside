@@ -322,14 +322,16 @@ void dos_qqmlcontext_setcontextproperty(::DosQQmlContext* vptr, const char* name
 }
 
 ::DosQQmlExtensionPlugin* dos_qqmlextensionplugin_create(void* dPluginObject,
-    ::DosQMetaObject* metaObjectPointer,
-    ::DObjectCallback dObjectCallback,
+    // TODO: add meta object support
+    // ::DosQMetaObject* metaObjectPointer,
+    // ::DObjectCallback dObjectCallback,
     ::DosQQmlExtensionPluginCallbacks* callbacks)
 {
-    auto metaObjectHolder = static_cast<DOS::DosIQMetaObjectHolder*>(metaObjectPointer);
+    // auto metaObjectHolder = static_cast<DOS::DosIQMetaObjectHolder*>(metaObjectPointer);
     auto plugin = new DOS::DosQQmlExtensionPlugin(dPluginObject,
-        metaObjectHolder->data(),
-        dObjectCallback,
+        // TODO: add meta object support
+        // metaObjectHolder->data(),
+        // dObjectCallback,
         *callbacks);
     // TODO: not sure. for now let us own the object so it will
     // not be destroyed unless we do it manually.
