@@ -82,7 +82,11 @@ install(FILES
 # Install directive for binaries
 install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} # for .so files
+)
+# TODO: consider remove suffix Static and merge with other install directive
+install(TARGETS "${PROJECT_NAME}Static"
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} # for .a files
 )
 
 # Install Pkg-Config definition
