@@ -335,8 +335,14 @@ void dos_qqmlcontext_setcontextproperty(::DosQQmlContext* vptr, const char* name
         *callbacks);
     // TODO: not sure. for now let us own the object so it will
     // not be destroyed unless we do it manually.
-    QQmlEngine::setObjectOwnership(plugin, QQmlEngine::CppOwnership);
+    // QQmlEngine::setObjectOwnership(plugin, QQmlEngine::CppOwnership);
     return static_cast<QObject*>(plugin);
+}
+
+void dos_qqmlextensionplugin_delete(DosQQmlExtensionPlugin* vptr)
+{
+    auto plugin = static_cast<QQmlExtensionPlugin*>(vptr);
+    delete plugin;
 }
 
 ::DosQVariant* dos_qvariant_create()

@@ -283,6 +283,9 @@ DOS_API DosQQmlExtensionPlugin* DOS_CALL dos_qqmlextensionplugin_create(void* dP
 
 /// @}
 
+/// \brief free memory allocated to the plugin
+DOS_API void DOS_CALL dos_qqmlextensionplugin_delete(DosQQmlExtensionPlugin* vptr);
+
 /// \defgroup QVariant QVariant
 /// \brief Functions related to the QVariant class
 /// @{
