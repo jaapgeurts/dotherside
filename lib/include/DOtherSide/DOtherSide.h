@@ -276,7 +276,7 @@ DOS_API void DOS_CALL dos_chararray_delete(char* ptr);
 /// Create a QQmlExtensionPlugin
 
 DOS_API DosQQmlExtensionPlugin* DOS_CALL dos_qqmlextensionplugin_create(void* dPluginObject,
-// TODO: add meta object support
+    // TODO: add meta object support
     // ::DosQMetaObject* metaObjectPointer,
     // ::DObjectCallback dObjectCallback,
     ::DosQQmlExtensionPluginCallbacks* callbacks);

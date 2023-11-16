@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "DOtherSide/DosQQmlExtensionPlugin.h"
+#include <QQmlEngine>
 
 namespace DOS {
 
